@@ -133,27 +133,107 @@ const icons = [
 
 
 
+// console.log(icons[0].name);
 
 
 
 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+/* Milestone 3
+Aggiungere alla pagina una select in cui le options corrispondono ai vari tipi di icone (animal, vegetable, user). Quando l'utente seleziona un tipo dalla select, visualizzare solamente le icone corrispondenti. */
+
+//UTILIZZO EVENTO AL CHANGE DELLE VARIE OPZIONI CREATE SU 
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+const selections = document.querySelector('select');
+selections.addEventListener('change' , (event) => {
+
+
+    const selectedValue = event.target.value;
+    console.log(selectedValue);
+    const iconTypeArr = icons.filter(icon => selectedValue === 'all' || icon.type === selectedValue);
+    row.innerHTML = '';
+    console.log(iconTypeArr);
+    iconTypeArr.forEach(icon => createBoxes(icon));
+
+    
+
+});
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
+
+// TEST CREAZIONE OPZIONI SELETTORE
+
+//////////////////////////////////////////////////////////
+
+
+function createOpt(){
+
+
+
+    // TEST 3 RICAVARE I VALORI DESIDERATI DELL'ARRAY
+
+// usando set e spread.....OK!
+
+////////////////////////////////////////////////////////////////////////
+
+const iconNames = icons.map(icon => icon.type);
+console.log(iconNames); 
+
+
+const uniqueIconNames = [...new Set(iconNames)];
+console.log(uniqueIconNames); 
+
+
+///////////////////////////////////////////////////////////////////////////
+
+    for (let i = 0 ; i < uniqueIconNames.length ; i++){
+
+        const opt = document.createElement('option');
+        opt.value = uniqueIconNames[i];
+        opt.textContent = uniqueIconNames[i];
+
+        optSel.appendChild(opt);
+    
+    } 
+    
+}
+
+const optSel = document.querySelector('select');
+
+const optPrint = createOpt()
+
+console.log(optSel);
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
 
 /* Milestone 1
 Partendo dalla struttura dati fornita, visualizzare in pagina un box per ogni icona, in cui è presente il nome dell'icona e l'icona stessa. */
 
 
+
 // devo creare una card per ogni icona contenente l'icona e il suo nome
 
-function createBoxes(icons) {
+function createBoxes(icon) {
 
-
-    //dove voglio che tutte le card siano contenute?
-
-    const row = document.getElementById('row')
-
-
-    //  come faccio a creare tramite funzioni una singola card completa da ripetere per piu volte...per ogni oggetto del nostro array
-    icons.forEach(icon => {
 
 
         // devo creare i contenitori dove inserire il tutto
@@ -173,11 +253,17 @@ function createBoxes(icons) {
         card.classList.add('card');
         cardBody.classList.add('card-body');
         iconElement.classList.add('fas', icon.prefix + icon.name, 'fa-' + icon.family );
+
+
+        ///////////////////////////////////////////////////////////////////////
+        /* Milestone 2
+        Ciascuna icona ha una proprietà "color": utilizzare questa proprietà per visualizzare le icone del colore corrispondente. */
         
         // devo assegnare ad ogni categoria di icona il suo colore
 
-        // iconElement.style.color = icon.color;
-        
+        iconElement.style.color = icon.color;
+
+        ////////////////////////////////////////////////////////////////////////////
         
         // appendo ttuo quello che ho creato con il suo contenuto
         cardBody.appendChild(iconElement);
@@ -187,16 +273,20 @@ function createBoxes(icons) {
         row.appendChild(col);
         console.log(iconElement);
 
-    }); return row;
-}
+}; 
 
 
-
-
-
+//dove voglio che tutte le card siano inserite?
 
 const row = document.getElementById('row');
-const fullCards = createBoxes(icons);
+
+
+// provo a richiamare la funzione che mi genera tuttle le card al caricamento della pagina
+
+icons.forEach(icon => createBoxes(icon));
+
+
+/////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -204,15 +294,100 @@ const fullCards = createBoxes(icons);
 
 
 
-// devo stampare tutte le card con il relativo contenuto in pagina
 
 
 
 
 
 
-/* Milestone 3
-Aggiungere alla pagina una select in cui le options corrispondono ai vari tipi di icone (animal, vegetable, user). Quando l'utente seleziona un tipo dalla select, visualizzare solamente le icone corrispondenti. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// TEST 1 RICAVARE I VALORI DESIDERATI DELL'ARRAY 
+
+///////////////////////////////////////////////////////////////////////
+
+
+
+// tentativo creazione funzione generale riutilizzabile
+
+//dato l'array iniziale e una proprietá a scelta devo ricavare una lista contenente tutti i valori della proprietá
+
+
+/* function  arrForProp(myArr, propriety){
+
+    const arrProp = [];
+    //const propFirstArr = myArr[0][propriety];
+
+    for (let i = 0 ; i < myArr.length ; i++){
+        
+        let arrPropAdder = myArr[i][propriety];
+
+        
+        arrProp.push(arrPropAdder);
+        
+    }
+    
+
+    return arrProp
+}
+
+console.log(arrForProp(icons,'type'));
+
+ */
+
+
+///////////////////////////////////////////////////////////////////////
+
+
+// TEST 2 RICAVARE I VALORI DESIDERATI DELL'ARRAY
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
+/* filteredOptions = [];
+icons.forEach(icon => !filteredOptions.includes(icon.type) && filteredOptions.push(icon.type) )
+
+
+console.log(filteredOptions);
+
+
+ */
+/////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
