@@ -249,10 +249,10 @@ function createBoxes(icon) {
 
 
         // dare le classi a tutti gli elementi creati
-        col.classList.add('col-10','col-md-6','col-lg-2');
-        card.classList.add('card');
-        cardBody.classList.add('card-body');
-        iconElement.classList.add('fas', icon.prefix + icon.name, 'fa-' + icon.family );
+        col.classList.add('col-12' ,'col-md-6','col-lg-3');
+        card.classList.add('card', 'my-3');
+        cardBody.classList.add('card-body' , 'text-center', 'text-uppercase', 'fw-bold');
+        iconElement.classList.add('fas', icon.prefix + icon.name, 'fa-' + icon.family, 'display-2');
 
 
         ///////////////////////////////////////////////////////////////////////

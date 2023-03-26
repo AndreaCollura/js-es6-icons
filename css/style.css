@@ -1,5 +1,6 @@
 :root{
-    
+    --sky: #23aedb;
+    --grey: #dddddd;
 }
 
 
@@ -7,3 +8,19 @@
     border: 1px solid red;
 }
 
+
+header{
+    height: 60px;
+    color: var(--sky);
+    background-color: white;
+}
+
+body{
+    background-color: var(--grey);
+}
+
+.select-bg{
+    background-color: #23aedb;
+    
+
+}
