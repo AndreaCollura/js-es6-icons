@@ -136,40 +136,9 @@ const icons = [
 // console.log(icons[0].name);
 
 
+/////////////////// racchiudo tutto dentro una funzione unica //////////////////////////
 
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-/* Milestone 3
-Aggiungere alla pagina una select in cui le options corrispondono ai vari tipi di icone (animal, vegetable, user). Quando l'utente seleziona un tipo dalla select, visualizzare solamente le icone corrispondenti. */
-
-//UTILIZZO EVENTO AL CHANGE DELLE VARIE OPZIONI CREATE SU 
-
-
-//////////////////////////////////////////////////////////////////////////////////////////
-
-const selections = document.querySelector('select');
-selections.addEventListener('change' , (event) => {
-
-
-    const selectedValue = event.target.value;
-    console.log(selectedValue);
-    const iconTypeArr = icons.filter(icon => selectedValue === 'all' || icon.type === selectedValue);
-    row.innerHTML = '';
-    console.log(iconTypeArr);
-    iconTypeArr.forEach(icon => createBoxes(icon));
-
-    
-
-});
-
-
-/////////////////////////////////////////////////////////////////////////////////
+function init(){
 
 
 // TEST CREAZIONE OPZIONI SELETTORE
@@ -177,119 +146,168 @@ selections.addEventListener('change' , (event) => {
 //////////////////////////////////////////////////////////
 
 
-function createOpt(){
 
+
+    function createOpt(){
+
+
+
+    // ricavo un nuovo array che come contenuto avrá il valore della proprietá scelta
+
+
+    const iconTypes = icons.map(icon => icon.type);
+    console.log(iconTypes); 
 
 
     // TEST 3 RICAVARE I VALORI DESIDERATI DELL'ARRAY
 
-// usando set e spread.....OK!
 
-////////////////////////////////////////////////////////////////////////
-
-const iconNames = icons.map(icon => icon.type);
-console.log(iconNames); 
+    // usando set e spread
 
 
-const uniqueIconNames = [...new Set(iconNames)];
-console.log(uniqueIconNames); 
+    ////////////////////////////////////////////////////////////////////////
 
 
-///////////////////////////////////////////////////////////////////////////
+    // const uniqueIconTypes = [...new Set(iconTypes)];
+    // console.log(uniqueIconTypes); 
 
-    for (let i = 0 ; i < uniqueIconNames.length ; i++){
 
+    ///////////////////////////////////////////////////////////////////////////
+
+
+
+    // usando un ciclo e push...OK
+
+    const uniqueIconTypes = [];
+    iconTypes.forEach(iconType => {
+        if (!uniqueIconTypes.includes(iconType)) {
+        uniqueIconTypes.push(iconType);
+        }
+    });
+    console.log(uniqueIconTypes);
+
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    for (let i = 0 ; i < uniqueIconTypes.length ; i++){
+    
         const opt = document.createElement('option');
-        opt.value = uniqueIconNames[i];
-        opt.textContent = uniqueIconNames[i];
-
+        opt.value = uniqueIconTypes[i];
+        opt.textContent = uniqueIconTypes[i];
+    
         optSel.appendChild(opt);
     
     } 
     
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /* Milestone 1
+    Partendo dalla struttura dati fornita, visualizzare in pagina un box per ogni icona, in cui è presente il nome dell'icona e l'icona stessa. */
+
+
+
+    // devo creare una card per ogni icona contenente l'icona e il suo nome
+
+    function createBoxes(icon) {
+
+
+
+            // devo creare i contenitori dove inserire il tutto
+
+            const col = document.createElement('div');
+            const card = document.createElement('div');
+            const cardBody = document.createElement('div')
+            const iconElement = document.createElement('i');
+            const nameIcon = document.createElement('p');
+
+            // devo inserire il testo dentro il p creato
+            nameIcon.textContent = `${icon.name}`;
+
+
+            // dare le classi a tutti gli elementi creati
+            col.classList.add('col-12' ,'col-md-6','col-lg-3');
+            card.classList.add('card', 'my-3');
+            cardBody.classList.add('card-body' , 'text-center', 'text-uppercase', 'fw-bold');
+            iconElement.classList.add('fas', icon.prefix + icon.name, 'fa-' + icon.family, 'display-2');
+
+
+            ///////////////////////////////////////////////////////////////////////
+            /* Milestone 2
+            Ciascuna icona ha una proprietà "color": utilizzare questa proprietà per visualizzare le icone del colore corrispondente. */
+
+            // devo assegnare ad ogni categoria di icona il suo colore
+
+            iconElement.style.color = icon.color;
+
+            ////////////////////////////////////////////////////////////////////////////
+
+            // appendo ttuo quello che ho creato con il suo contenuto
+            cardBody.appendChild(iconElement);
+            cardBody.appendChild(nameIcon);
+            card.appendChild(cardBody);
+            col.appendChild(card);
+            row.appendChild(col);
+            console.log(iconElement);
+
+    }; 
+
+
+    /* Milestone 3
+    Aggiungere alla pagina una select in cui le options corrispondono ai vari tipi di icone (animal, vegetable, user). Quando l'utente seleziona un tipo dalla  select, visualizzare solamente le icone corrispondenti. */
+
+    //UTILIZZO EVENTO AL CHANGE DELLE VARIE OPZIONI CREATE SU 
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    const selections = document.querySelector('select');
+    selections.addEventListener('change' , (event) => {
+
+
+        const selectedValue = event.target.value;
+        console.log(selectedValue);
+        const iconTypeArr = icons.filter(icon => selectedValue === 'all' || icon.type === selectedValue);
+        row.innerHTML = '';
+        console.log(iconTypeArr);
+        iconTypeArr.forEach(icon => createBoxes(icon));
+
+
+
+    });
+
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    const optSel = document.querySelector('select');
+
+    const optPrint = createOpt()
+
+    console.log(optSel);
+
+
+    //dove voglio che tutte le card siano inserite?
+
+    const row = document.getElementById('row');
+
+
+    // provo a richiamare la funzione che mi genera tuttle le card al caricamento della pagina
+
+    icons.forEach(icon => createBoxes(icon));
+
+
+    /////////////////////////////////////////////////////////////////////////////////////
+
+
 }
 
-const optSel = document.querySelector('select');
-
-const optPrint = createOpt()
-
-console.log(optSel);
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////
-
-/* Milestone 1
-Partendo dalla struttura dati fornita, visualizzare in pagina un box per ogni icona, in cui è presente il nome dell'icona e l'icona stessa. */
-
-
-
-// devo creare una card per ogni icona contenente l'icona e il suo nome
-
-function createBoxes(icon) {
-
-
-
-        // devo creare i contenitori dove inserire il tutto
-
-        const col = document.createElement('div');
-        const card = document.createElement('div');
-        const cardBody = document.createElement('div')
-        const iconElement = document.createElement('i');
-        const nameIcon = document.createElement('p');
-
-        // devo inserire il testo dentro il p creato
-        nameIcon.textContent = `${icon.name}`;
-
-
-        // dare le classi a tutti gli elementi creati
-        col.classList.add('col-12' ,'col-md-6','col-lg-3');
-        card.classList.add('card', 'my-3');
-        cardBody.classList.add('card-body' , 'text-center', 'text-uppercase', 'fw-bold');
-        iconElement.classList.add('fas', icon.prefix + icon.name, 'fa-' + icon.family, 'display-2');
-
-
-        ///////////////////////////////////////////////////////////////////////
-        /* Milestone 2
-        Ciascuna icona ha una proprietà "color": utilizzare questa proprietà per visualizzare le icone del colore corrispondente. */
-        
-        // devo assegnare ad ogni categoria di icona il suo colore
-
-        iconElement.style.color = icon.color;
-
-        ////////////////////////////////////////////////////////////////////////////
-        
-        // appendo ttuo quello che ho creato con il suo contenuto
-        cardBody.appendChild(iconElement);
-        cardBody.appendChild(nameIcon);
-        card.appendChild(cardBody);
-        col.appendChild(card);
-        row.appendChild(col);
-        console.log(iconElement);
-
-}; 
-
-
-//dove voglio che tutte le card siano inserite?
-
-const row = document.getElementById('row');
-
-
-// provo a richiamare la funzione che mi genera tuttle le card al caricamento della pagina
-
-icons.forEach(icon => createBoxes(icon));
-
-
-/////////////////////////////////////////////////////////////////////////////////////
-
-
-
+init();
 
 
 
